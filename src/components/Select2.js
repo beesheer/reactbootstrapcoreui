@@ -142,7 +142,7 @@ export default class Select2 extends React.Component {
                   <FormGroup>
                     <Label htmlFor="inputWarning2i">Required input</Label>
                     <Input
-                      type="text" className={!this.validation.testInputName ? 'is-invalid' : 'is-valid'} id="inputWarning2i" required name="testInputName" value={this.state.testInputName} onChange={this.handleChange} />
+                      type="text" className={!this.validation.testInputName ? 'is-invalid' : 'is-valid'} id="inputWarning2i" name="testInputName" value={this.state.testInputName} onChange={this.handleChange} />
                     <FormFeedback>Houston, we have a problem...</FormFeedback>
                     <FormFeedback valid className="help-block">Input provided</FormFeedback>
                   </FormGroup>
