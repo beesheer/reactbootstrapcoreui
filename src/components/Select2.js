@@ -27,6 +27,7 @@ import {
 import Select from 'react-select';
 
 const options = [
+  { value: '', label: '--Please select--' },
   { value: 'chocolate', label: 'Chocolate' },
   { value: 'strawberry', label: 'Strawberry' },
   { value: 'vanilla', label: 'Vanilla' }
@@ -40,11 +41,11 @@ export default class Select2 extends React.Component {
       testInputName: '',
       testSingleSelect: null,
       testMultiSelect: [],
-      validation: {testInputName: true, testSingleSelect: true, testMultiSelect: true}
     }
-
     this.handleChange = this.handleChange.bind(this);
   }
+
+  validation = { testInputName: true, testSingleSelect: true, testMultiSelect: true }
 
   handleChange = (event) => {
     const target = event.target;
@@ -56,17 +57,25 @@ export default class Select2 extends React.Component {
     })
 
     this.validate(name, value);
-    console.log(this.state.validation);
+    console.log(this.validation);
   }
 
   validate = (name, value) => {
     console.log('validate ', name, value);
     switch (name) {
       case 'testInputName':
-        this.setState({
-          validation: Object.assign({}, this.state.validation, {
-            [name]: value === '' ? false : true
-          })
+        this.validation = Object.assign(this.validation, {
+          [name]: value === '' ? false : true
+        });
+        return;
+      case 'testSingleSelect':
+        this.validation = Object.assign(this.validation, {
+          [name]: value === '' ? false : true
+        })
+        return;
+      case 'testMultiSelect':
+        this.validation = Object.assign(this.validation, {
+            [name]: value > 0 ? true: false
         })
         return;
       default:
@@ -78,19 +87,43 @@ export default class Select2 extends React.Component {
     this.setState({
       testSingleSelect: selectedOption
     })
+    this.validate('testSingleSelect', selectedOption.value);
   }
 
   handleSelect2MultiChange = (selectedOptions, node) => {
     this.setState({
       testMultiSelect: selectedOptions
     })
+
+    this.validate('testMultiSelect', selectedOptions.length);
   }
 
   onSubmit = (e) => {
     console.log(e);
     e.preventDefault();
+    
+    // Need to validate all inputs
+    this.validate('testInputName', this.state.testInputName);
+    this.validate('testSingleSelect', this.state.testSingleSelect == null ? '' : this.state.testSingleSelect.value);
+    this.validate('testMultiSelect', this.state.testMultiSelect.length);
+
     console.log(this.state);
-    this.validate();
+
+    // Check all the validation state
+    let isValid = true;
+    Object.keys(this.validation).forEach((key) => {
+      if (this.validation[key] === false) {
+        isValid = false;
+      }
+    });
+
+    this.forceUpdate();
+
+    if(!isValid) {
+      alert('Form is INVALID');
+    } else {
+      alert('Nice Job!');
+    }
   }
 
   render() {
@@ -108,21 +141,24 @@ export default class Select2 extends React.Component {
 
                   <FormGroup>
                     <Label htmlFor="inputWarning2i">Required input</Label>
-                    <Input 
-                      type="text" className={!this.state.validation.testInputName ? 'is-invalid' : 'is-valid'} id="inputWarning2i" required name="testInputName" value={this.state.testInputName} onChange={this.handleChange} />
+                    <Input
+                      type="text" className={!this.validation.testInputName ? 'is-invalid' : 'is-valid'} id="inputWarning2i" required name="testInputName" value={this.state.testInputName} onChange={this.handleChange} />
                     <FormFeedback>Houston, we have a problem...</FormFeedback>
                     <FormFeedback valid className="help-block">Input provided</FormFeedback>
                   </FormGroup>
                   <FormGroup>
                     <Label htmlFor="inputWarning2i">Required Select</Label>
                     <Select
+                      className={!this.validation.testSingleSelect ? 'is-invalid' : 'is-valid'}
                       value={this.state.testSingleSelect}
                       onChange={this.handleSelect2Change}
                       options={options}
                       name="testSingleSelect"
                     />
-                    <FormFeedback className="help-block">Please provide a valid information</FormFeedback>
                   </FormGroup>
+                  {
+                    !this.validation.testSingleSelect && <div className="invalid-feedback" style={{display: 'block'}}>Houston, we have a problem...</div>
+                  }
 
                 </CardBody>
                 <CardFooter>
@@ -146,6 +182,9 @@ export default class Select2 extends React.Component {
                   isMulti
                   name="testMultiSelect"
                 />
+                {
+                  !this.validation.testMultiSelect && <div className="invalid-feedback" style={{display: 'block'}}>Please choose at least one</div>
+                }
               </CardBody>
             </Card>
           </Col>
