@@ -36,6 +36,16 @@ export default {
           icon: 'icon-puzzle',
         }
       ]
+    },
+    {
+      name: 'Forms',
+      url: '/base/forms',
+      icon: 'icon-puzzle'
+    },
+    {
+      name: 'Select2',
+      url: '/select2',
+      icon: 'icon-puzzle'
     }
   ],
 };

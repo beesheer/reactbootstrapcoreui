@@ -183,6 +183,11 @@ const User = Loadable({
   loading: Loading,
 });
 
+const Select2 = Loadable({
+  loader: () => import('./components/Select2'),
+  loading: Loading,
+});
+
 
 //https://stackoverflow.com/questions/27928372/react-router-urls-dont-work-when-refreshing-or-writting-manually
 // Have to use #login to make it work in the url directly
@@ -203,6 +208,7 @@ const routes = [
   { path: '/charts', name: 'Charts', component: Charts },
   { path: '/users', exact: true,  name: 'Users', component: Users },
   { path: '/users/:id', exact: true, name: 'User Details', component: User },
+  { path: '/select2', exact: true, name: 'Select2 Test', component: Select2 },
 ];
 
 export default routes;
