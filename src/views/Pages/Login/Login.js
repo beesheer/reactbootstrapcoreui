@@ -1,7 +1,18 @@
 import React, { Component } from 'react';
 import { Button, Card, CardBody, CardGroup, Col, Container, Form, Input, InputGroup, InputGroupAddon, InputGroupText, Row } from 'reactstrap';
+import {withRouter} from 'react-router-dom'
 
 class Login extends Component {
+
+  handleOnClick = () => {
+    this.props.history.push('/register');
+  }
+
+  onSubmit = (e) => {
+    e.preventDefault();
+    console.log('Login attempt');
+  }
+
   render() {
     return (
       <div className="app flex-row align-items-center">
@@ -11,7 +22,7 @@ class Login extends Component {
               <CardGroup>
                 <Card className="p-4">
                   <CardBody>
-                    <Form>
+                    <Form onSubmit={this.onSubmit}>
                       <h1>Login</h1>
                       <p className="text-muted">Sign In to your account</p>
                       <InputGroup className="mb-3">
@@ -47,7 +58,7 @@ class Login extends Component {
                       <h2>Sign up</h2>
                       <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut
                         labore et dolore magna aliqua.</p>
-                      <Button color="primary" className="mt-3" active>Register Now!</Button>
+                      <Button color="primary" className="mt-3" active onClick={this.handleOnClick}>Register Now!</Button>
                     </div>
                   </CardBody>
                 </Card>
@@ -60,4 +71,4 @@ class Login extends Component {
   }
 }
 
-export default Login;
+export default withRouter(Login);
