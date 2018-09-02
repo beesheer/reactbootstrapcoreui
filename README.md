@@ -1,4 +1,4 @@
-A skeleton react.js app. The following packages are used. redux, react-redux, react-router-dom, coreui, react-redux-thunk, react-redux-logger, cross-fetch, etc.
+A skeleton single page app based on react.js cli. The following packages are used. redux, react-redux, react-router-dom, coreui, react-redux-thunk, react-redux-logger, cross-fetch, etc.
 
 Features:
 - Loading screen to intialize app
