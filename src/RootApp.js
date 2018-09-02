@@ -23,17 +23,9 @@ import { connect } from 'react-redux';
 
 class RootApp extends Component {
   render() {
-    console.log(this.props);
-    
     // The app is still loading
     if (this.props.appIsLoading) {
-      return (
-        <HashRouter>
-          <Switch>
-            <Route exact path="/" name="Login Page" component={LoadingApp} />
-          </Switch>
-        </HashRouter>
-      )
+      return <LoadingApp />
     }
 
     // The app has loaded
@@ -59,11 +51,13 @@ class RootApp extends Component {
 }
 
 function mapStateToProps(state) {
-  const { appIsLoading, appData, username} = state;
+  const { appIsLoading, appData} = state.appInit;
+  const { username, userdata} = state.user;
   return {
     appIsLoading,
     appData,
     username,
+    userdata
   }
 }
 export default connect(mapStateToProps)(RootApp)

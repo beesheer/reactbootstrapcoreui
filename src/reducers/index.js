@@ -5,7 +5,7 @@ import {
 } from '../actions'
 
 // This is the reducer to prepare for the app, for example, loading 
-function appInitReducer(state = {appIsLoading: true, appData: null}, action) {
+function appInit(state = {appIsLoading: true, appData: null}, action) {
   switch (action.type) {
     case 'APP_LOAD_REQUEST':
       return {
@@ -22,7 +22,7 @@ function appInitReducer(state = {appIsLoading: true, appData: null}, action) {
   }
 }
 
-function userReducer(state = { username: '', isLoggingIn: false, userData: null }, action) {
+function user(state = { username: '', isLoggingIn: false, userData: null }, action) {
   switch (action.type) {
     case USER_LOGIN_REQUEST: 
       return {
@@ -32,7 +32,7 @@ function userReducer(state = { username: '', isLoggingIn: false, userData: null 
       }
     case USER_LOGIN_SUCCESS:
       return {
-        username: action.data.username,
+        username: action.username,
         isLoggingIn: false,
         userData: action.data
       }
@@ -42,7 +42,7 @@ function userReducer(state = { username: '', isLoggingIn: false, userData: null 
 }
 
 const rootReducers = combineReducers({
-  appInitReducer,
-  userReducer
+  appInit,
+  user
 })
 export default rootReducers

@@ -2,12 +2,11 @@ import React from 'react'
 import configureStore from './configureStore'
 import RootApp from './RootApp'
 import { Provider } from 'react-redux'
+import {appLoad} from './actions'
 
 const store = configureStore();
+store.dispatch(appLoad())
 
-store.subscribe((store) => {
-  console.log(store.getState())
-})
 export default class App extends React.Component {
   render() {
     return (

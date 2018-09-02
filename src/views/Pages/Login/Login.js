@@ -1,8 +1,31 @@
 import React, { Component } from 'react';
 import { Button, Card, CardBody, CardGroup, Col, Container, Form, Input, InputGroup, InputGroupAddon, InputGroupText, Row } from 'reactstrap';
-import {withRouter} from 'react-router-dom'
-
+import { withRouter } from 'react-router-dom'
+import { connect } from 'react-redux'
+import {
+  userLogin
+} from '../../../actions' // Improve this import...
 class Login extends Component {
+  constructor(props) {
+    super(props)
+  }
+
+  userInfo = {
+    username: '',
+    password: '',
+  }
+
+  onChange = (event) => {
+    const target = event.target
+    const value = target.value
+    const name = target.name
+
+    this.userInfo = Object.assign(this.userInfo, {
+      [name]: value
+    })
+
+    console.log(this.userInfo);
+  }
 
   handleOnClick = () => {
     this.props.history.push('/register');
@@ -10,10 +33,17 @@ class Login extends Component {
 
   onSubmit = (e) => {
     e.preventDefault();
-    console.log('Login attempt');
+    if (this.props.isLoggingIn || this.userInfo.username === '' || this.userInfo.password === '') {
+      return false;
+    }
+    const { dispatch } = this.props;
+    dispatch(userLogin(this.userInfo.username, this.userInfo.password))
   }
 
   render() {
+    if (this.props.username !== '') {
+      this.props.history.push('/dashboard');
+    }
     return (
       <div className="app flex-row align-items-center">
         <Container>
@@ -31,7 +61,7 @@ class Login extends Component {
                             <i className="icon-user"></i>
                           </InputGroupText>
                         </InputGroupAddon>
-                        <Input type="text" placeholder="Username" autoComplete="username" />
+                        <Input type="text" name="username" placeholder="Username" autoComplete="username" onChange={this.onChange} />
                       </InputGroup>
                       <InputGroup className="mb-4">
                         <InputGroupAddon addonType="prepend">
@@ -39,11 +69,13 @@ class Login extends Component {
                             <i className="icon-lock"></i>
                           </InputGroupText>
                         </InputGroupAddon>
-                        <Input type="password" placeholder="Password" autoComplete="current-password" />
+                        <Input type="password" name="password" placeholder="Password" autoComplete="current-password" onChange={this.onChange} />
                       </InputGroup>
                       <Row>
                         <Col xs="6">
-                          <Button color="primary" className="px-4">Login</Button>
+                          <Button color="primary" className="px-4" disabled={this.props.isLoggingIn ? true : false}>
+                            {this.props.isLoggingIn ? <span><i className="fa fa-spinner fa-pulse"></i> Logging In</span> : <span>Login</span>} 
+                          </Button>
                         </Col>
                         <Col xs="6" className="text-right">
                           <Button color="link" className="px-0">Forgot password?</Button>
@@ -71,4 +103,13 @@ class Login extends Component {
   }
 }
 
-export default withRouter(Login);
+function mapStateToProps(state) {
+  const { username, isLoggingIn, userData } = state.user
+  return {
+    username,
+    isLoggingIn,
+    userData
+  }
+}
+
+export default connect(mapStateToProps)(withRouter(Login))
