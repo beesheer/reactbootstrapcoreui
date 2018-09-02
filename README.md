@@ -8,3 +8,5 @@ Features:
 
 ### `npm install`
 ### `npm start`
+
+![alt abc](http://url/to/img.png)
