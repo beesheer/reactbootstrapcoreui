@@ -9,4 +9,6 @@ Features:
 ### `npm install`
 ### `npm start`
 
-![alt abc](http://url/to/img.png)
+![alt login](http://www.kugeci.com/img/1.png)
+
+![alt dashboard](http://www.kugeci.com/img/2.png)
