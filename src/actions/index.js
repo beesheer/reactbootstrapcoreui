@@ -23,6 +23,8 @@ function userLoginSuccess(userData, username) {
 export const USER_LOGIN = 'USER_LOGIN'
 // This is the action async action that dispatch multiple actions
 export function userLogin(username, password) {
+  // Using laravel passport to login and get access token from a local instance.
+  // TODO: move a gitignore config file to store all the sensitive information
   let data = new FormData();
   data.append('grant_type', 'password');
   data.append('client_id', '2');
