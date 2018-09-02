@@ -29,3 +29,25 @@ export function userLogin(username, password) {
       .then(json => dispatch(userLoginSuccess(json)))
   }
 }
+
+function appLoadRequest() {
+  return {
+    type: 'APP_LOAD_REQUEST',
+  }
+}
+
+function appLoadSuccess(data) {
+  return {
+    type: 'APP_LOAD_SUCCESS',
+    data: data
+  }
+}
+
+export function appLoad() {
+  return dispatch => {
+    dispatch(appLoadRequest())
+    fetch(`https://www.reddit.com/r/dota2.json`)
+      .then(response => response.json)
+      .then(json => dispatch(appLoadSuccess(json)))
+  }
+}

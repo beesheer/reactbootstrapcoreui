@@ -4,7 +4,25 @@ import {
   USER_LOGIN_SUCCESS
 } from '../actions'
 
-function userReducer(state = { username: '', isLoggingIn = false, userData: null }, action) {
+// This is the reducer to prepare for the app, for example, loading 
+function appInitReducer(state = {appIsLoading: true, appData: null}, action) {
+  switch (action.type) {
+    case 'APP_LOAD_REQUEST':
+      return {
+        appIsLoading: true,
+        appData: {}
+      }
+    case 'APP_LOAD_SUCCESS':
+      return {
+        appIsLoading: false,
+        appData: action.data
+      }
+    default:
+      return state
+  }
+}
+
+function userReducer(state = { username: '', isLoggingIn: false, userData: null }, action) {
   switch (action.type) {
     case USER_LOGIN_REQUEST: 
       return {
@@ -24,6 +42,7 @@ function userReducer(state = { username: '', isLoggingIn = false, userData: null
 }
 
 const rootReducers = combineReducers({
+  appInitReducer,
   userReducer
 })
 export default rootReducers
