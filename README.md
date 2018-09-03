@@ -14,8 +14,12 @@ Features:
 - Login action to populate user state
 - Form instant validation using local class property (not using react state)
 
+## To set up a local instance
+### `git clone`
 ### `npm install`
 ### `npm start`
+
+## Screenshots for the dmeo
 
 ![alt login](http://www.kugeci.com/img/1.png)
 
