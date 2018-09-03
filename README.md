@@ -1,6 +1,10 @@
 ## Demo
 <http://www.kugeci.com/examples/react/>
 
+To login, use 
+- demo@kugeci.com
+- kugecidemo
+
 ## Details
 A skeleton single page app based on react.js cli. The following packages are used. redux, react-redux, react-router-dom, coreui, react-redux-thunk, react-redux-logger, cross-fetch, etc.
 
