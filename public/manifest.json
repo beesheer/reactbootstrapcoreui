@@ -1,6 +1,6 @@
 {
-  "short_name": "CoreUI-React",
-  "name": "CoreUI-React sample",
+  "short_name": "React Admin Dashboard",
+  "name": "React Admin Dashboard",
   "icons": [
     {
       "src": "./assets/favicon.png",

@@ -1,4 +1,5 @@
 import fetch from 'cross-fetch'
+import appConfig from '../../app-config'
 
 export const USER_LOGIN_REQUEST = 'USER_LOGIN_REQUEST'
 // Internal function to return request action
@@ -28,7 +29,7 @@ export function userLogin(username, password) {
   let data = new FormData();
   data.append('grant_type', 'password');
   data.append('client_id', '2');
-  data.append('client_secret', '8vSMMQIWdgm6RqxR4r3a9yaMSk37dlP5alzL6ViL');
+  data.append('client_secret', appConfig.localAuthClientSecret);
   data.append('username', username);
   data.append('password', password);
   data.append('scope', '*');
