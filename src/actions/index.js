@@ -52,9 +52,12 @@ export function userLogin(username, password) {
         if (response.status !== 200) {
           dispatch(userLoginFailed());
         } else {
-          response.json().then(json => dispatch(userLoginSuccess(json, username)))
+          response.json()
+            .then(json => dispatch(userLoginSuccess(json, username)))
+            .catch((error) => console.log(error))
         }
       })
+      .catch((error) => console.log(error))
   }
 }
 
@@ -77,5 +80,6 @@ export function appLoad() {
     fetch(`https://www.reddit.com/r/dota2.json`)
       .then(response => response.json)
       .then(json => dispatch(appLoadSuccess(json)))
+      .catch((error) => console.log(error))
   }
 }

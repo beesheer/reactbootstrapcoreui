@@ -12,22 +12,13 @@ export default {
       },
     },
     {
-      name: 'Login',
-      url: '/login',
-      icon: 'icon-speedometer',
-      badge: {
-        variant: 'info',
-        text: 'NEW',
-      },
-    },
-    {
       name: 'Base',
       url: '/base',
       icon: 'icon-puzzle',
       children: [
         {
-          name: 'Breadcrumbs',
-          url: '/base/breadcrumbs',
+          name: 'Forms',
+          url: '/base/forms',
           icon: 'icon-puzzle',
         },
         {
@@ -36,11 +27,6 @@ export default {
           icon: 'icon-puzzle',
         }
       ]
-    },
-    {
-      name: 'Forms',
-      url: '/base/forms',
-      icon: 'icon-puzzle'
     },
     {
       name: 'Select2',
