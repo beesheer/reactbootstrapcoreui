@@ -15,7 +15,7 @@ import { DefaultLayout } from './containers';
 // Import Main styles for this application
 import './scss/style.css';
 // Pages
-import { Login, Page404, Page500, Register, LoadingApp } from './views/Pages';
+import { Logout, Login, Page404, Page500, Register, LoadingApp } from './views/Pages';
 import { connect } from 'react-redux';
 
 
@@ -33,6 +33,7 @@ class RootApp extends Component {
       <HashRouter>
         <Switch>
           <Route exact path="/login" name="Login Page" component={Login} />
+          <Route exact path="/logout" name="Logout" component={Logout} />
           <Route exact path="/register" name="Register Page" component={Register} />
           <Route exact path="/404" name="Page 404" component={Page404} />
           <Route exact path="/500" name="Page 500" component={Page500} />

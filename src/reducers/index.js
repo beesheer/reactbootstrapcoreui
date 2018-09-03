@@ -46,6 +46,13 @@ function user(state = { username: '', isLoggingIn: false, userData: null, loginF
         userData: null,
         loginFailed: true,
       }
+    case 'USER_LOGOUT':
+      return {
+        username: '',
+        isLoggingIn: false,
+        userData: null,
+        loginFailed: false
+      }
     default:
       return state;
   }

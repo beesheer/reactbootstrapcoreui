@@ -61,6 +61,12 @@ export function userLogin(username, password) {
   }
 }
 
+export function userLogout() {
+  return {
+    type: 'USER_LOGOUT'
+  }
+}
+
 function appLoadRequest() {
   return {
     type: 'APP_LOAD_REQUEST',
