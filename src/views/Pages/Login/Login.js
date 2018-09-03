@@ -15,6 +15,25 @@ class Login extends Component {
     password: '',
   }
 
+  validation = { username: true, password: true}
+
+  validate = (name, value) => {
+    switch (name) {
+      case 'username':
+        this.validation = Object.assign(this.validation, {
+          [name]: value === '' ? false : true
+        });
+        return;
+      case 'password':
+        this.validation = Object.assign(this.validation, {
+          [name]: value === '' ? false : true
+        })
+        return;
+      default:
+        return;
+    }
+  }
+
   onChange = (event) => {
     const target = event.target
     const value = target.value
@@ -23,16 +42,17 @@ class Login extends Component {
     this.userInfo = Object.assign(this.userInfo, {
       [name]: value
     })
-
-    console.log(this.userInfo);
   }
 
-  handleOnClick = () => {
+  handleOnRegisterClick = () => {
     this.props.history.push('/register');
   }
 
   onSubmit = (e) => {
     e.preventDefault();
+    this.validate('username', this.userInfo.username);
+    this.validate('password', this.userInfo.password);
+
     if (this.props.isLoggingIn || this.userInfo.username === '' || this.userInfo.password === '') {
       return false;
     }
@@ -61,7 +81,10 @@ class Login extends Component {
                             <i className="icon-user"></i>
                           </InputGroupText>
                         </InputGroupAddon>
-                        <Input type="text" name="username" placeholder="Username" autoComplete="username" onChange={this.onChange} />
+                        <Input 
+                          className={!this.validation.username ? 'is-invalid' : 'is-valid'}
+                          type="text" name="username" placeholder="Username" autoComplete="username" onChange={this.onChange} />
+                        <FormFeedback>Please enter username</FormFeedback>
                       </InputGroup>
                       <InputGroup className="mb-4">
                         <InputGroupAddon addonType="prepend">
@@ -69,7 +92,10 @@ class Login extends Component {
                             <i className="icon-lock"></i>
                           </InputGroupText>
                         </InputGroupAddon>
-                        <Input type="password" name="password" placeholder="Password" autoComplete="current-password" onChange={this.onChange} />
+                        <Input 
+                          className={!this.validation.password ? 'is-invalid' : 'is-valid'}
+                          type="password" name="password" placeholder="Password" autoComplete="current-password" onChange={this.onChange} />
+                          <FormFeedback>Please enter password</FormFeedback>
                       </InputGroup>
                       <Row>
                         <Col xs="6">
@@ -90,7 +116,7 @@ class Login extends Component {
                       <h2>Sign up</h2>
                       <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut
                         labore et dolore magna aliqua.</p>
-                      <Button color="primary" className="mt-3" active onClick={this.handleOnClick}>Register Now!</Button>
+                      <Button color="primary" className="mt-3" active onClick={this.handleOnRegisterClick}>Register Now!</Button>
                     </div>
                   </CardBody>
                 </Card>
