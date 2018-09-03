@@ -1,5 +1,5 @@
 import fetch from 'cross-fetch'
-import appConfig from '../../app-config'
+import { appConfig } from '../app-config'
 
 export const USER_LOGIN_REQUEST = 'USER_LOGIN_REQUEST'
 // Internal function to return request action
@@ -27,19 +27,19 @@ export function userLogin(username, password) {
   // Using laravel passport to login and get access token from a local instance.
   // TODO: move a gitignore config file to store all the sensitive information
   let data = new FormData();
-  data.append('grant_type', 'password');
-  data.append('client_id', '2');
-  data.append('client_secret', appConfig.localAuthClientSecret);
+  data.append('grant_type', appConfig.auth.grantType);
+  data.append('client_id', appConfig.auth.clientId);
+  data.append('client_secret', appConfig.auth.secret);
   data.append('username', username);
   data.append('password', password);
   data.append('scope', '*');
   return dispatch => {
     dispatch(userLoginRequest(username))
-    fetch(`http://learn/oauth/token`, {
+    fetch(appConfig.auth.baseUrl, {
       method: 'POST',
       body: data,
       headers: {
-        
+
       },
     })
       .then(response => response.json())
