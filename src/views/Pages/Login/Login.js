@@ -1,15 +1,11 @@
 import React, { Component } from 'react';
-import { Button, Card, CardBody, CardGroup, Col, Container, Form, Input, InputGroup, InputGroupAddon, InputGroupText, Row } from 'reactstrap';
+import { Button, Card, CardBody, CardGroup, Col, Container, Form, Input, InputGroup, InputGroupAddon, InputGroupText, Row, FormFeedback} from 'reactstrap';
 import { withRouter } from 'react-router-dom'
 import { connect } from 'react-redux'
 import {
   userLogin
 } from '../../../actions' // Improve this import...
 class Login extends Component {
-  constructor(props) {
-    super(props)
-  }
-
   userInfo = {
     username: '',
     password: '',
@@ -52,8 +48,10 @@ class Login extends Component {
     e.preventDefault();
     this.validate('username', this.userInfo.username);
     this.validate('password', this.userInfo.password);
+    console.log(this.validation);
 
     if (this.props.isLoggingIn || this.userInfo.username === '' || this.userInfo.password === '') {
+      this.forceUpdate();
       return false;
     }
     const { dispatch } = this.props;
@@ -84,7 +82,7 @@ class Login extends Component {
                         <Input 
                           className={!this.validation.username ? 'is-invalid' : 'is-valid'}
                           type="text" name="username" placeholder="Username" autoComplete="username" onChange={this.onChange} />
-                        <FormFeedback>Please enter username</FormFeedback>
+                        <FormFeedback>Please enter username corretly</FormFeedback>
                       </InputGroup>
                       <InputGroup className="mb-4">
                         <InputGroupAddon addonType="prepend">
@@ -95,8 +93,9 @@ class Login extends Component {
                         <Input 
                           className={!this.validation.password ? 'is-invalid' : 'is-valid'}
                           type="password" name="password" placeholder="Password" autoComplete="current-password" onChange={this.onChange} />
-                          <FormFeedback>Please enter password</FormFeedback>
+                          <FormFeedback>Please enter password corretly</FormFeedback>
                       </InputGroup>
+                      {this.props.loginFailed ? <p style={{color: 'red'}}>Incorrect username or password. Please try again</p> : <span></span>}
                       <Row>
                         <Col xs="6">
                           <Button color="primary" className="px-4" disabled={this.props.isLoggingIn ? true : false}>
@@ -130,11 +129,12 @@ class Login extends Component {
 }
 
 function mapStateToProps(state) {
-  const { username, isLoggingIn, userData } = state.user
+  const { username, isLoggingIn, userData, loginFailed} = state.user
   return {
     username,
     isLoggingIn,
-    userData
+    userData,
+    loginFailed
   }
 }
 

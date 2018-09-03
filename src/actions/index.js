@@ -13,11 +13,17 @@ function userLoginRequest(username) {
 export const USER_LOGIN_SUCCESS = 'USER_LOGIN_SUCCESS'
 // Internal function to when a user login successfully
 function userLoginSuccess(userData, username) {
-  console.log(userData);
   return {
     username,
     type: USER_LOGIN_SUCCESS,
     data: userData,
+  }
+}
+
+export const USER_LOGIN_FAILED = 'USER_LOGIN_FAILED'
+function userLoginFailed() {
+  return {
+    type: USER_LOGIN_FAILED
   }
 }
 
@@ -42,8 +48,13 @@ export function userLogin(username, password) {
 
       },
     })
-      .then(response => response.json())
-      .then(json => dispatch(userLoginSuccess(json, username)))
+      .then(response => {
+        if (response.status !== 200) {
+          dispatch(userLoginFailed());
+        } else {
+          response.json().then(json => dispatch(userLoginSuccess(json, username)))
+        }
+      })
   }
 }
 

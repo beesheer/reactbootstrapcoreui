@@ -1,7 +1,8 @@
 import { combineReducers } from 'redux'
 import {
   USER_LOGIN_REQUEST,
-  USER_LOGIN_SUCCESS
+  USER_LOGIN_SUCCESS,
+  USER_LOGIN_FAILED
 } from '../actions'
 
 // This is the reducer to prepare for the app, for example, loading 
@@ -22,19 +23,28 @@ function appInit(state = {appIsLoading: true, appData: null}, action) {
   }
 }
 
-function user(state = { username: '', isLoggingIn: false, userData: null }, action) {
+function user(state = { username: '', isLoggingIn: false, userData: null, loginFailed: false}, action) {
   switch (action.type) {
     case USER_LOGIN_REQUEST: 
       return {
         username: '',
         isLoggingIn: true,
-        userData: null
+        userData: null,
+        loginFailed: false,
       }
     case USER_LOGIN_SUCCESS:
       return {
         username: action.username,
         isLoggingIn: false,
-        userData: action.data
+        userData: action.data,
+        loginFailed: false,
+      }
+    case USER_LOGIN_FAILED:
+      return {
+        username: '',
+        isLoggingIn: false,
+        userData: null,
+        loginFailed: true,
       }
     default:
       return state;
