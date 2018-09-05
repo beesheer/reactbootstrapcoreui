@@ -1,5 +1,5 @@
 ## Demo
-<http://www.kugeci.com/examples/react/>
+<http://www.kugeci.com/example/react/>
 
 To login, use 
 - username: `demo@kugeci.com`
