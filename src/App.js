@@ -12,7 +12,12 @@ const preloadedState = persistedState != null
   ? Object.assign(persistedState, {appInit: {appIsLoading: true, appData: null}})
   : null;
 
-const store = configureStore(preloadedState);
+let store = null;
+if (preloadedState != null) {
+  store = configureStore(preloadedState);
+} else {
+  store = configureStore();
+}
 
 store.subscribe(()=>{
   localStorage.setItem('reduxState', JSON.stringify(store.getState()))
